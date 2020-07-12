@@ -4,4 +4,4 @@ from config import Environment
 
 
 e = Environment()
-coco = COCO(e.ann_file)
+coco = COCO(e.captions_file)
