@@ -102,7 +102,7 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
+config/.env
 .venv
 env/
 venv/
@@ -131,3 +131,6 @@ dmypy.json
 # IDE
 .idea/
 .vscode/
+
+# COCO dataset
+data/
