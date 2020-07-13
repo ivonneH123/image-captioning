@@ -134,3 +134,6 @@ dmypy.json
 
 # COCO dataset
 data/
+
+# Temporal data
+temp/
