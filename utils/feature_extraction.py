@@ -32,4 +32,5 @@ class FeatureExtractor:
             img = self.image_loader.load(path)
             feature = self.model.predict(img)
             feature_dict[path] = feature
-            self.__save_feature_dict(dump_dir=dump_dir, feature_dict=feature_dict)
+
+        self.__save_feature_dict(dump_dir=dump_dir, feature_dict=feature_dict)
