@@ -8,7 +8,7 @@ from utils import constants
 
 
 class DataLoader:
-    def __init__(self, data_type, annotation_file, data_dir, limit=None, random_state=0):
+    def __init__(self, data_type, annotation_file, data_dir, limit=None, random_state=constants.RANDOM_STATE):
         # Variables to load data
         self.data_type = data_type
         self.annotation_file = annotation_file
