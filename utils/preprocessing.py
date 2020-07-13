@@ -1,12 +1,11 @@
-import numpy as np
-from keras.applications import inception_v3
+from keras.applications import InceptionV3
 from keras.preprocessing import image
 
 from utils import constants
 
 
 class ImageLoader:
-    def __init__(self, dim=constants.INCEPTION_DIM, model=inception_v3):
+    def __init__(self, dim=constants.INCEPTION_DIM, model=InceptionV3):
         self.dim = dim
         self.model = model
 
@@ -19,7 +18,7 @@ class ImageLoader:
         img = self.model.preprocess_input(img)
         return img
 
-    def __call__(self, image_path):
+    def load(self, image_path):
         raw_img = self.__load_img(image_path)
         proprocessed_img = self.__preprocess_input(raw_img)
         return proprocessed_img

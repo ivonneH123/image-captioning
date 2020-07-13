@@ -9,3 +9,5 @@ INCEPTION_DIM = (299, 299)
 
 # Constants used for model
 IMAGE_WEIGHTS = 'imagenet'
+TEMP_DIR = 'temp/'
+FEATURE_DICT_NAME = 'feature_dict'
