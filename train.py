@@ -62,10 +62,12 @@ def train(base_image_mode=InceptionV3):
                                 batch_size=constants.BATCH_SIZE,
                                 verbose=constants.VERBOSE)
 
-    model_filepath = coach.save_model(save_dir=constants.SAVE_DIR, filename=constants.FILENAME)
+    model_filepath = coach.save_model(save_dir=constants.SAVE_DIR, filename=constants.FILENAME + constants.MODEL_EXT)
 
     # Save training data
-    train_history_filename = os.path.join(constants.TEMP_DIR, 'train_history' + model_filepath)
+    train_history_filename = os.path.join(constants.TEMP_DIR, 'train_history' + model_filepath + constants.HISTORY_EXT)
+    if not os.path.exists(train_history_filename):
+        os.mkdir(train_history_filename)
     with open(train_history_filename, "wb+") as f:
         Pickler(f).dump(train_history)
 

@@ -36,3 +36,7 @@ BATCH_SIZE = 32
 VERBOSE = True
 SAVE_DIR = 'model/weights'
 FILENAME = 'model_{epochs}epochs_{name}'
+
+# Extensions
+MODEL_EXT = '.h5'
+HISTORY_EXT = '.history'
