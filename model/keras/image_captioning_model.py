@@ -1,5 +1,6 @@
 from tensorflow.keras import Input, Model
-from tensorflow.keras.layers import Dropout, Dense, Embedding, LSTM, add
+from tensorflow.keras.layers import Dropout, Dense, Embedding, add
+from tensorflow.keras.layers import GRU
 from tensorflow.keras.optimizers import Adam
 
 from utils import constants
@@ -21,7 +22,7 @@ class ImageCaptioningModel:
         partial_captions = Input(shape=(max_length,))
         embedding_layer = Embedding(vocabulary_size, embedding_dim, mask_zero=True)(partial_captions)
         sequence_dropout = Dropout(dropout)(embedding_layer)
-        sequence_output = LSTM(units=embedding_dim, recurrent_initializer='glorot_uniform')(sequence_dropout)
+        sequence_output = GRU(units=embedding_dim, recurrent_initializer='glorot_uniform')(sequence_dropout)
 
         # decoder
         decoder_input = add([feature_extraction_output, sequence_output])
