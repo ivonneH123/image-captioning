@@ -28,17 +28,16 @@ class ImageCaptioningModel:
         decoder_input = add([feature_extraction_output, sequence_output])
         decoder_hidden = Dense(embedding_dim, activation='relu')(decoder_input)
         outputs = Dense(vocabulary_size, activation='softmax')(decoder_hidden)
-
         # full model
         self.model = Model(inputs=[image_features, partial_captions], outputs=outputs)
         self.model.compile(loss='categorical_crossentropy', optimizer=Adam(learning_rate))
 
-    def fit(self, generator, train_size, epochs, batch_size, verbose):
+    def fit(self, generator, epochs, train_size, batch_size, verbose):
         self.epochs = epochs
-        return self.model.fit_generator(generator=generator,
-                                        steps_per_epoch=train_size // batch_size,
-                                        epochs=epochs,
-                                        verbose=verbose)
+        return self.model.fit(x=generator,
+                              steps_per_epoch=train_size // batch_size,
+                              epochs=epochs,
+                              verbose=verbose)
 
     def predict(self, image):
         return self.model.predict(image)

@@ -28,8 +28,8 @@ class Coach:
         features_dict = self.__load_features_dict(image_dict_path)
         return self.model.fit(generator=self.generator(captions_vector, features_dict,
                                                        batch_size, self.vocabulary_size, self.max_length),
-                              train_size=len(captions_vector),
                               epochs=epochs,
+                              train_size=len(captions_vector),
                               batch_size=batch_size,
                               verbose=verbose)
 
