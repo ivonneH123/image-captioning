@@ -6,6 +6,7 @@ cffi==1.14.0
 chardet==3.0.4
 click==7.1.2
 colorama==0.4.3
+coloredlogs==14.0
 cycler==0.10.0
 Cython==0.29.21
 enum34==1.1.10
@@ -15,6 +16,7 @@ google-auth-oauthlib==0.4.1
 google-pasta==0.2.0
 grpcio==1.30.0
 h5py==2.10.0
+humanfriendly==8.2
 idna==2.10
 joblib==0.16.0
 Keras==2.2.4

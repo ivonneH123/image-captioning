@@ -1,7 +1,12 @@
-from keras import preprocessing
-from keras.preprocessing import text
+import logging
+import time
+
+from tensorflow.keras import preprocessing
+from tensorflow.keras.preprocessing import text
 
 from utils import constants
+
+log = logging.getLogger(__name__)
 
 
 class CaptionTokenizer:
@@ -24,9 +29,13 @@ class CaptionTokenizer:
         return captions_vector
 
     def tokenize(self, captions):
+        log.info("Tokenizing image captions...")
+        start = time.time()
         train_seqs = self.__fit_transform(captions=captions)
         captions_vector = self.__pad_sequences(train_seqs=train_seqs)
         max_lenght = self.__max_lenght(captions=captions_vector)
+        end = time.time()
+        print(f"Caption vectors obtained! Total elapsed time: {(end - start):.2f} s")
         return max_lenght, captions_vector
 
 

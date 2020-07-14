@@ -1,10 +1,13 @@
 import json
+import logging
 import time
 
 from sklearn.utils import shuffle
 from tqdm import tqdm
 
 from utils import constants
+
+log = logging.getLogger(__name__)
 
 
 class DataLoader:
@@ -24,37 +27,37 @@ class DataLoader:
         self.image_paths = []
 
     def __open_annotation_file(self):
-        print(f"Searching annotation file on path {self.annotation_file}...")
+        log.info(f"Searching annotation file on path {self.annotation_file}...")
         with open(self.annotation_file, 'r') as file:
-            print("File found! Reading annotations from file...")
+            log.info("File found! Reading annotations from file...")
 
             start = time.time()
             self.annotations = json.load(file).get("annotations")
             end = time.time()
 
-            print(f"Annotations read! Total elapsed time: {(end - start):.2f} s")
+            log.info(f"Annotations read! Total elapsed time: {(end - start):.2f} s")
 
     def __load_captions(self):
-        print("Loading captions from annotation files...")
+        log.info("Loading captions from annotation files...")
         for ann in tqdm(self.annotations):
             caption = constants.START_SEQ + ann['caption'] + constants.END_SEQ
             image_id = ann['image_id']
             image_path = constants.IMAGE_PATH.format(images_dir=self.data_dir,
                                                      data_type=self.data_type,
-                                                     image_id=image_id)
+                                                     image_id=str(image_id).zfill(constants.ID_SIZE))
             self.captions.append(caption)
             self.image_paths.append(image_path)
 
     def __shuffle(self):
-        print("Shuffling the data...")
+        log.info("Shuffling the data...")
         start = time.time()
         self.captions, self.image_paths = shuffle(self.captions, self.image_paths, random_state=self.random_state)
         end = time.time()
-        print(f"Data shuffled! Total elapsed time: {(end - start):.2f} s")
+        log.info(f"Data shuffled! Total elapsed time: {(end - start):.2f} s")
 
     def __sample(self):
         if self.limit:
-            print(f"Selecting {self.limit} samples from dataset...")
+            log.info(f"Selecting {self.limit} samples from dataset...")
             self.captions = self.captions[:self.limit]
             self.image_paths = self.image_paths[:self.limit]
 
@@ -65,5 +68,5 @@ class DataLoader:
         self.__shuffle()
         self.__sample()
         end = time.time()
-        print(f"Data loaded! Total elapsed time: {(end - start):.2f} s")
+        log.info(f"Data loaded! Total elapsed time: {(end - start):.2f} s")
         return self.captions, self.image_paths

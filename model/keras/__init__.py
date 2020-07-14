@@ -1,0 +1,1 @@
+from model.keras.image_captioning_model import ImageCaptioningModel
