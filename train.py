@@ -76,4 +76,4 @@ if __name__ == "__main__":
     start = time.time()
     train()
     end = time.time()
-    print(f"Training done! Total elapsed time: {(end - start):.2f} s")
+    log.info(f"Training done! Total elapsed time: {(end - start):.2f} s")

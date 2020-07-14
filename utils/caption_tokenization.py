@@ -35,7 +35,7 @@ class CaptionTokenizer:
         captions_vector = self.__pad_sequences(train_seqs=train_seqs)
         max_lenght = self.__max_lenght(captions=captions_vector)
         end = time.time()
-        print(f"Caption vectors obtained! Total elapsed time: {(end - start):.2f} s")
+        log.info(f"Caption vectors obtained! Total elapsed time: {(end - start):.2f} s")
         return max_lenght, captions_vector
 
 

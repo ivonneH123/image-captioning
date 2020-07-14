@@ -1,9 +1,12 @@
+import logging
 import os
 import sys
 from pickle import Unpickler
 
 from model.keras import ImageCaptioningModel
 from utils import data_generator, constants
+
+log = logging.getLogger(__name__)
 
 
 class Coach:
@@ -16,7 +19,7 @@ class Coach:
     @staticmethod
     def __load_features_dict(image_dict_path):
         if not os.path.isfile(image_dict_path):
-            print(f"File {image_dict_path} not found.")
+            log.error(f"File {image_dict_path} not found.")
             sys.exit()
         else:
             with open(image_dict_path, "rb") as f:
