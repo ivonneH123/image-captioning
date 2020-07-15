@@ -44,6 +44,7 @@ class ImageCaptioningModel:
 
     def save_weights(self, filename):
         self.model.save_weights(filename.format(epochs=self.epochs, name=ImageCaptioningModel.__name__))
+        return filename.format(epochs=self.epochs, name=ImageCaptioningModel.__name__)
 
     def load_weights(self, filename):
         self.model.load_weights(filename)

@@ -83,7 +83,7 @@ class Coach:
             log.info(f"Directory {save_dir} not found. Creating directory...")
             os.mkdir(save_dir)
         log.info(f"Saving model...")
-        self.model.save_weights(filepath)
+        filepath = self.model.save_weights(filepath)
         log.info(f"Model saved at {filepath}!")
         return filepath
 
