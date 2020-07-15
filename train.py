@@ -2,7 +2,6 @@ import logging
 import os
 import time
 from pickle import Pickler
-os.environ['KERAS_BACKEND'] = 'tensorflow'
 
 import coloredlogs
 from tensorflow.keras.applications import InceptionV3
