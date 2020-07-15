@@ -20,7 +20,7 @@ coloredlogs.install(level='INFO')
 def args_parser():
     parser.add_argument('-v', '--validate', dest='validate', action='store_const',
                         const=True, default=False, help='execute validation')
-    parser.add_argument('model_path', help='model weights path')
+    parser.add_argument('model_path', nargs='?', help='model weights path')
 
 
 def train(model_path, validation=False, base_image_mode=InceptionV3):
