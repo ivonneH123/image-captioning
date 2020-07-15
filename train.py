@@ -66,8 +66,8 @@ def train(base_image_mode=InceptionV3):
 
     # Save training data
     train_history_filename = os.path.join(constants.TEMP_DIR, 'train_history' + model_filepath + constants.HISTORY_EXT)
-    if not os.path.exists(train_history_filename):
-        os.mkdir(train_history_filename)
+    if not os.path.exists(os.path.join(constants.TEMP_DIR, 'train_history')):
+        os.mkdir(os.path.join(constants.TEMP_DIR, 'train_history'))
     with open(train_history_filename, "wb+") as f:
         Pickler(f).dump(train_history)
 
