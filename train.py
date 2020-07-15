@@ -72,6 +72,9 @@ def train(model_path, validation=False, base_image_mode=InceptionV3):
         model_filepath = coach.save_model(save_dir=constants.SAVE_DIR,
                                           filename=constants.FILENAME + constants.MODEL_EXT)
 
+        log.info(f"Model saved at {model_filepath}!")
+        log.info("Plotting training history...")
+
         # Plot training data
         plt.plot(train_history.history['loss'])
         plt.title('model loss')
