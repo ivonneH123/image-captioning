@@ -3,8 +3,8 @@ RANDOM_STATE = 0
 ERROR_EXIT = 1
 
 # Captions loading
-START_SEQ = '<start>'
-END_SEQ = '<end>'
+START_SEQ = '<start> '
+END_SEQ = ' <end>'
 
 # Image loading and preprocessing
 IMAGE_PATH = '{images_dir}/image/COCO_{data_type}_{image_id}.jpg'
