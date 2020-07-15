@@ -2,14 +2,13 @@ import argparse
 import logging
 import os
 import time
-from pickle import Pickler
 
 import coloredlogs
-from tensorflow.keras.applications import InceptionV3
 from sklearn.model_selection import train_test_split
+from tensorflow.keras.applications import InceptionV3
+import matplotlib.pyplot as plt
 
 from config import Environment
-
 from utils import DataLoader, constants, CaptionTokenizer, FeatureExtractor, Coach
 
 # log configuration
@@ -73,13 +72,13 @@ def train(model_path, validation=False, base_image_mode=InceptionV3):
         model_filepath = coach.save_model(save_dir=constants.SAVE_DIR,
                                           filename=constants.FILENAME + constants.MODEL_EXT)
 
-        # Save training data
-        train_history_filename = os.path.join(constants.TEMP_DIR,
-                                              'train_history' + model_filepath + constants.HISTORY_EXT)
-        if not os.path.exists(os.path.join(constants.TEMP_DIR, 'train_history')):
-            os.mkdir(os.path.join(constants.TEMP_DIR, 'train_history'))
-        with open(train_history_filename, "wb+") as f:
-            Pickler(f).dump(train_history)
+        # Plot training data
+        plt.plot(train_history.history['loss'])
+        plt.title('model loss')
+        plt.ylabel('loss')
+        plt.xlabel('epoch')
+        plt.legend(['train'], loc='upper left')
+        plt.show()
 
     else:
         coach.load_model(load_dir=constants.SAVE_DIR, filename=model_path)
