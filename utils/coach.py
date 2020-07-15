@@ -84,7 +84,7 @@ class Coach:
         log.info(f"Saving model...")
         filepath = self.model.save_weights(filepath)
         log.info(f"Model saved at {filepath}!")
-        return filepath
+        return filepath[filepath.rfind('/') + 1:]
 
     def load_model(self, load_dir=constants.SAVE_DIR, filename=None):
         filepath = os.path.join(load_dir, filename)
