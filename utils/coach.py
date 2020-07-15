@@ -5,9 +5,8 @@ from pickle import Unpickler
 
 import numpy as np
 import tensorflow
-from keras_preprocessing.sequence import pad_sequences
-from tqdm import tqdm
 from nltk.translate.bleu_score import sentence_bleu
+from tqdm import tqdm
 
 from model.keras import ImageCaptioningModel
 from utils import data_generator, constants
