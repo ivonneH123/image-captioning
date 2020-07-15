@@ -70,10 +70,7 @@ class Coach:
         for key, sequence in tqdm(captions_vector):
             feature_vector = features_dict[key]
             predicted_caption = self._predict_word(feature_vector, tokenizer)
-            real_caption = [tokenizer.index_word[idx] for idx in sequence]
-            print(tokenizer.index_word[3])
-            print(f"predicted caption: {predicted_caption}")
-            print(f"real caption: {real_caption}")
+            real_caption = tokenizer.sequences_to_texts(sequence)
             bleu_score += sentence_bleu([real_caption], predicted_caption)
 
         bleu_score /= len(captions_vector)
