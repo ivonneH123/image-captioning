@@ -19,7 +19,7 @@ class FeatureExtractor:
         self.image_loader = ImageLoader(dim=dim, preprocess_input=preprocess_input)
 
     @staticmethod
-    def __save_feature_dict(dump_dir, feature_dict):
+    def _save_feature_dict(dump_dir, feature_dict):
         if not os.path.exists(dump_dir):
             os.makedirs(dump_dir)
 
@@ -37,4 +37,4 @@ class FeatureExtractor:
             feature = np.reshape(feature, feature.shape[1])
             feature_dict[path] = feature
 
-        self.__save_feature_dict(dump_dir=dump_dir, feature_dict=feature_dict)
+        self._save_feature_dict(dump_dir=dump_dir, feature_dict=feature_dict)

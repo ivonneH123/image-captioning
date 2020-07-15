@@ -39,8 +39,8 @@ class ImageCaptioningModel:
                               epochs=epochs,
                               verbose=verbose)
 
-    def predict(self, image):
-        return self.model.predict(image)
+    def predict(self, image, caption):
+        return self.model.predict(x=[image, caption])
 
     def save_weights(self, filename):
         self.model.save_weights(filename.format(epochs=self.epochs, name=ImageCaptioningModel.__name__))

@@ -10,7 +10,7 @@ def data_generator(captions_vector, features_dict, num_images_per_batch, vocabul
     while True:
         for key, sequence in captions_vector:
             num_stored_images += 1
-            photo = features_dict[key]
+            feature_vector = features_dict[key]
             for i in range(1, len(sequence)):
                 if (i + 1 == len(sequence)) or sequence[i + 1] == 0:
                     break
@@ -21,7 +21,7 @@ def data_generator(captions_vector, features_dict, num_images_per_batch, vocabul
                 # encode output sequence
                 out_seq = to_categorical([out_seq], num_classes=vocabulary_size)[0]
                 # store
-                features.append(photo)
+                features.append(feature_vector)
                 partial_captions.append(in_seq)
                 next_word.append(out_seq)
 

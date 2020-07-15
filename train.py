@@ -1,3 +1,4 @@
+import argparse
 import logging
 import os
 import time
@@ -16,7 +17,13 @@ log = logging.getLogger(__name__)
 coloredlogs.install(level='INFO')
 
 
-def train(base_image_mode=InceptionV3):
+def args_parser():
+    parser.add_argument('-v', '--validate', dest='validate', action='store_const',
+                        const=True, default=False, help='execute validation')
+    parser.add_argument('model_path', help='model weights path')
+
+
+def train(model_path, validation=False, base_image_mode=InceptionV3):
     # Load environment variables
     e = Environment()
 
@@ -54,25 +61,47 @@ def train(base_image_mode=InceptionV3):
 
     # Train
     coach = Coach(max_length=max_length, vocabulary_size=constants.TOP_KEYS)
-    log.info(f"Training {coach.model.__class__.__name__} on {len(captions_train)} training samples...")
-    train_history = coach.train(image_dict_path=features_dict_path,
-                                captions_vector=captions_train,
-                                epochs=constants.EPOCHS,
-                                batch_size=constants.BATCH_SIZE,
-                                verbose=constants.VERBOSE)
 
-    model_filepath = coach.save_model(save_dir=constants.SAVE_DIR, filename=constants.FILENAME + constants.MODEL_EXT)
+    if not validation:
+        log.info(f"Training {coach.model.__class__.__name__} on {len(captions_train)} training samples...")
+        train_history = coach.train(image_dict_path=features_dict_path,
+                                    captions_vector=captions_train,
+                                    epochs=constants.EPOCHS,
+                                    batch_size=constants.BATCH_SIZE,
+                                    verbose=constants.VERBOSE)
 
-    # Save training data
-    train_history_filename = os.path.join(constants.TEMP_DIR, 'train_history' + model_filepath + constants.HISTORY_EXT)
-    if not os.path.exists(os.path.join(constants.TEMP_DIR, 'train_history')):
-        os.mkdir(os.path.join(constants.TEMP_DIR, 'train_history'))
-    with open(train_history_filename, "wb+") as f:
-        Pickler(f).dump(train_history)
+        model_filepath = coach.save_model(save_dir=constants.SAVE_DIR,
+                                          filename=constants.FILENAME + constants.MODEL_EXT)
+
+        # Save training data
+        train_history_filename = os.path.join(constants.TEMP_DIR,
+                                              'train_history' + model_filepath + constants.HISTORY_EXT)
+        if not os.path.exists(os.path.join(constants.TEMP_DIR, 'train_history')):
+            os.mkdir(os.path.join(constants.TEMP_DIR, 'train_history'))
+        with open(train_history_filename, "wb+") as f:
+            Pickler(f).dump(train_history)
+
+    else:
+        coach.load_model(load_dir=constants.SAVE_DIR, filename=model_path)
+        coach.validate(image_dict_path=features_dict_path,
+                       captions_vector=captions_val,
+                       tokenizer=tokenizer.tokenizer)
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Train and/or validate a image captioning model.')
+    args_parser()
+    args = parser.parse_args()
+    filepath = None
+
+    if args.validate:
+        filepath = args.model_path
+        log.info(f"Starting validation of model located at file {filepath}...")
+    else:
+        log.info("Starting training...")
+
     start = time.time()
-    train()
+    train(validation=args.validate, model_path=filepath)
     end = time.time()
-    log.info(f"Training done! Total elapsed time: {(end - start):.2f} s")
+
+    log.info(f"Process done! Total elapsed time: {(end - start):.2f} s")

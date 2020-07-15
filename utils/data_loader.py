@@ -26,7 +26,7 @@ class DataLoader:
         self.captions = []
         self.image_paths = []
 
-    def __open_annotation_file(self):
+    def _open_annotation_file(self):
         log.info(f"Searching annotation file on path {self.annotation_file}...")
         with open(self.annotation_file, 'r') as file:
             log.info("File found! Reading annotations from file...")
@@ -37,7 +37,7 @@ class DataLoader:
 
             log.info(f"Annotations read! Total elapsed time: {(end - start):.2f} s")
 
-    def __load_captions(self):
+    def _load_captions(self):
         log.info("Loading captions from annotation files...")
         for ann in tqdm(self.annotations):
             caption = constants.START_SEQ + ann['caption'] + constants.END_SEQ
@@ -48,14 +48,14 @@ class DataLoader:
             self.captions.append(caption)
             self.image_paths.append(image_path)
 
-    def __shuffle(self):
+    def _shuffle(self):
         log.info("Shuffling the data...")
         start = time.time()
         self.captions, self.image_paths = shuffle(self.captions, self.image_paths, random_state=self.random_state)
         end = time.time()
         log.info(f"Data shuffled! Total elapsed time: {(end - start):.2f} s")
 
-    def __sample(self):
+    def _sample(self):
         if self.limit:
             log.info(f"Selecting {self.limit} samples from dataset...")
             self.captions = self.captions[:self.limit]
@@ -63,10 +63,10 @@ class DataLoader:
 
     def load(self):
         start = time.time()
-        self.__open_annotation_file()
-        self.__load_captions()
-        self.__shuffle()
-        self.__sample()
+        self._open_annotation_file()
+        self._load_captions()
+        self._shuffle()
+        self._sample()
         end = time.time()
         log.info(f"Data loaded! Total elapsed time: {(end - start):.2f} s")
         return self.captions, self.image_paths

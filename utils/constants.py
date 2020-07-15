@@ -1,5 +1,6 @@
-# Random state
+# Utils
 RANDOM_STATE = 0
+ERROR_EXIT = 1
 
 # Captions loading
 START_SEQ = '<start>'
